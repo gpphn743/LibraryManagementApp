@@ -6,7 +6,7 @@ class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   void _pushtoHomeScreen(BuildContext context) {
-    Navigator.pushNamed(context, '/home');
+    Navigator.pushNamed(context, '/control');
   }
 
   void _pushtoSignUpScreen(BuildContext context) {

@@ -5,6 +5,7 @@ import 'package:library_management_app/modules/screens/book_list_screen.dart';
 import 'package:library_management_app/modules/screens/borrowing_screen.dart';
 import 'package:library_management_app/modules/screens/home_screen.dart';
 import 'package:library_management_app/modules/screens/login_screen.dart';
+import 'package:library_management_app/modules/widgets/control.dart';
 import 'package:library_management_app/modules/screens/page_not_found.dart';
 import 'package:library_management_app/modules/screens/sign_up_screen.dart';
 
@@ -22,6 +23,10 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (context) => const SignUpScreen(),
             settings: const RouteSettings(name: RouteName.signUp));
+      case RouteName.control:
+        return MaterialPageRoute(
+            builder: (context) => const Control(),
+            settings: const RouteSettings(name: RouteName.control));
       case RouteName.home:
         return MaterialPageRoute(
             builder: (context) => const HomeScreen(),

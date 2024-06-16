@@ -5,6 +5,8 @@ import 'package:library_management_app/modules/route/app_router.dart';
 import 'package:library_management_app/modules/screens/account_screen.dart';
 import 'package:library_management_app/modules/screens/book_list_screen.dart';
 import 'package:library_management_app/modules/screens/borrowing_screen.dart';
+import 'package:library_management_app/modules/service/books_provider.dart';
+import 'package:library_management_app/modules/service/google_books_service.dart';
 import 'package:library_management_app/modules/widgets/control.dart';
 import 'package:library_management_app/modules/screens/home_screen.dart';
 import 'package:library_management_app/modules/screens/login_screen.dart';
@@ -19,42 +21,42 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ),
+  );
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setSystemUIOverlayStyle(
-    //   const SystemUiOverlayStyle(
-    //     statusBarColor: Colors.transparent,
-    //   ),
-    // );
-    return
-        // MultiProvider(
-        //   providers: const [],
-        // child:
-        MaterialApp(
-      //debugShowCheckedModeBanner: false, //hide debug tag
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.mainColor),
-        useMaterial3: true,
-        fontFamily: GoogleFonts.dmSans().fontFamily,
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(),
-          bodyMedium: TextStyle(),
-          bodySmall: TextStyle(),
-        ).apply(
-          bodyColor: AppColors.mainColor,
-          displayColor: AppColors.mainColor,
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+          create: (context) => BooksProvider(apiService: ApiService()),
         ),
-      ),
-      //home: const HomeDemo(),
-      onGenerateRoute: AppRouter.instance.onGenerateRoute,
-    );
-    // );
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false, //hide debug tag
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: AppColors.mainColor),
+            useMaterial3: true,
+            fontFamily: GoogleFonts.dmSans().fontFamily,
+            textTheme: const TextTheme(
+              bodyLarge: TextStyle(),
+              bodyMedium: TextStyle(),
+              bodySmall: TextStyle(),
+            ).apply(
+              bodyColor: AppColors.mainColor,
+              displayColor: AppColors.mainColor,
+            ),
+          ),
+          //home: const HomeDemo(),
+          onGenerateRoute: AppRouter.instance.onGenerateRoute,
+        ));
   }
 }

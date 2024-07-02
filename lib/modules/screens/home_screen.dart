@@ -254,7 +254,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Consumer<BooksProvider>(
         builder: (context, booksProvider, child) {
           if (booksProvider.isLoading) {
@@ -277,7 +276,7 @@ class HomeScreen extends StatelessWidget {
         scrollDirection: Axis.vertical,
         children: <Widget>[
           const Text(
-            "Welcome, username!",
+            "Welcome, Eddie Wood!",
             style: TextStyle(
                 color: AppColors.mainColor,
                 fontSize: 24,

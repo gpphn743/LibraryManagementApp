@@ -7,6 +7,7 @@ import 'package:library_management_app/modules/screens/book_list_screen.dart';
 import 'package:library_management_app/modules/screens/borrowing_screen.dart';
 import 'package:library_management_app/modules/service/books_provider.dart';
 import 'package:library_management_app/modules/service/google_books_service.dart';
+import 'package:library_management_app/modules/widgets/auth_wrapper.dart';
 import 'package:library_management_app/modules/widgets/control.dart';
 import 'package:library_management_app/modules/screens/home_screen.dart';
 import 'package:library_management_app/modules/screens/login_screen.dart';
@@ -55,7 +56,7 @@ class MyApp extends StatelessWidget {
               displayColor: AppColors.mainColor,
             ),
           ),
-          //home: const HomeDemo(),
+          home: const AuthWrapper(),
           onGenerateRoute: AppRouter.instance.onGenerateRoute,
         ));
   }

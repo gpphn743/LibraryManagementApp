@@ -27,22 +27,22 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (context) => const Control(),
             settings: const RouteSettings(name: RouteName.control));
-      case RouteName.home:
-        return MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
-            settings: const RouteSettings(name: RouteName.home));
-      case RouteName.booklist:
-        return MaterialPageRoute(
-            builder: (context) => const BookListScreen(),
-            settings: const RouteSettings(name: RouteName.booklist));
-      case RouteName.borrowing:
-        return MaterialPageRoute(
-            builder: (context) => const BorrowingScreen(),
-            settings: const RouteSettings(name: RouteName.borrowing));
-      case RouteName.account:
-        return MaterialPageRoute(
-            builder: (context) => const AccountScreen(),
-            settings: const RouteSettings(name: RouteName.account));
+      // case RouteName.home:
+      //   return MaterialPageRoute(
+      //       builder: (context) => const HomeScreen(),
+      //       settings: const RouteSettings(name: RouteName.home));
+      // case RouteName.booklist:
+      //   return MaterialPageRoute(
+      //       builder: (context) => const BookListScreen(),
+      //       settings: const RouteSettings(name: RouteName.booklist));
+      // case RouteName.borrowing:
+      //   return MaterialPageRoute(
+      //       builder: (context) => const BorrowingScreen(),
+      //       settings: const RouteSettings(name: RouteName.borrowing));
+      // case RouteName.account:
+      //   return MaterialPageRoute(
+      //       builder: (context) => const AccountScreen(),
+      //       settings: const RouteSettings(name: RouteName.account));
       default:
         return MaterialPageRoute(
           builder: (context) => const PageNotFound(),

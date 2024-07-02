@@ -1,9 +1,30 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:library_management_app/modules/themes/app_color.dart';
 import 'package:library_management_app/modules/themes/spacing.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  Future<void> _signUp() async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      _poptoLoginScreen(context);
+    } catch (e) {
+      print(e);
+    }
+  }
 
   void _poptoLoginScreen(BuildContext context) {
     Navigator.pop(context, '/login');
@@ -28,10 +49,11 @@ class SignUpScreen extends StatelessWidget {
             ),
           ),
           Spacing.v10,
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
             child: TextField(
-              decoration: InputDecoration(
+              controller: _emailController,
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(24)),
                 ),
@@ -52,11 +74,12 @@ class SignUpScreen extends StatelessWidget {
             ),
           ),
           Spacing.v10,
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40.0),
             child: TextField(
+              controller: _passwordController,
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(24)),
                 ),
@@ -83,7 +106,7 @@ class SignUpScreen extends StatelessWidget {
             height: 58,
             child: ElevatedButton(
               onPressed: () {
-                _poptoLoginScreen(context);
+                _signUp();
               },
               style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.mainColor),

@@ -8,6 +8,7 @@ class BooksProvider extends ChangeNotifier {
   List<Book> trendingBooks = [];
   List<Book> bucketListBooks = [];
   List<Book> onBorrowingBooks = [];
+  List<Book> borrowedBooks = [];
   bool isLoading = false;
 
   BooksProvider({required this.apiService}) {
@@ -53,5 +54,10 @@ class BooksProvider extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
     }
+  }
+
+  void addToBorrowedBooks(Book book) {
+    borrowedBooks.add(book);
+    notifyListeners();
   }
 }

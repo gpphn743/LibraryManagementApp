@@ -1,32 +1,35 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:flutter/material.dart';
-// import 'package:library_management_app/modules/models/book.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:library_management_app/modules/models/book.dart';
 
-// class FirestoreService {
-//   final FirebaseFirestore _db = FirebaseFirestore.instance;
+class FirestoreService {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-//   Future<void> addBorrowedBook(String userId, Book book) async {
-//     try {
-//       await _db
-//           .collection('users')
-//           .doc(userId)
-//           .collection('borrowedBooks')
-//           .doc(book.id)
-//           .set({
-//         'title': book.title,
-//         'author': book.authors,
-//         'thumbnail': book.thumbnail,
-//         'borrowedDate': Timestamp.now(),
-//         'returnDate': null, //add later, maybe 30 days/borrow
-//       });
-//     } catch (e) {
-//       debugPrint('Error adding borrowed book: $e');
-//     }
-//   }
+  Future<void> addBorrowedBook(Book book) async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      await _firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('borrowedBooks')
+          .doc(book.id)
+          .set(book.toMap());
+    }
+  }
 
-//   Stream<List<Book>> getBorrowedBooks(String userId) {
-//     return _db.collection('users')
-//       .doc(userId)
-//       .collection('borrowedBooks');
-//   }
-// }
+  Future<List<Book>> getBorrowedBooks() async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('borrowedBooks')
+          .get();
+      return querySnapshot.docs
+          .map((doc) => Book.fromMap(doc.data() as Map<String, dynamic>))
+          .toList();
+    }
+    return [];
+  }
+}

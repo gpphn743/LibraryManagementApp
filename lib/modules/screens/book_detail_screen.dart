@@ -13,7 +13,7 @@ class BookDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final booksProvider = Provider.of<BooksProvider>(context);
+    //final booksProvider = Provider.of<BooksProvider>(context);
 
     // IconData icon;
     // if (condition) {
@@ -75,9 +75,17 @@ class BookDetailScreen extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                        onPressed: () {
-                          booksProvider.addToBorrowedBooks(book);
-                          Navigator.pop(context);
+                        onPressed: () async {
+                          // booksProvider.addToBorrowedBooks(book);
+                          // Navigator.pop(context);
+                          await Provider.of<BooksProvider>(context,
+                                  listen: false)
+                              .addToBorrowedBooks(book);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content:
+                                    Text('${book.title} added to Borrowing')),
+                          );
                         },
                         icon: const Icon(
                           Icons.add_circle_outline,
@@ -103,14 +111,14 @@ class BookDetailScreen extends StatelessWidget {
                   ),
                   textAlign: TextAlign.justify,
                 ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    booksProvider.addToBorrowedBooks(book);
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(Icons.add_circle_outline),
-                  label: const Text('Add to Borrowing List'),
-                ),
+                // ElevatedButton.icon(
+                //   onPressed: () {
+                //     booksProvider.addToBorrowedBooks(book);
+                //     Navigator.pop(context);
+                //   },
+                //   icon: const Icon(Icons.add_circle_outline),
+                //   label: const Text('Add to Borrowing List'),
+                // ),
               ],
             ),
           ),

@@ -30,6 +30,7 @@ class _ControlState extends State<Control> {
 
   Future<void> _signOut() async {
     await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushReplacementNamed('/');
   }
 
   @override

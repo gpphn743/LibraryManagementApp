@@ -2,8 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:library_management_app/modules/service/books_provider.dart';
 import 'package:provider/provider.dart';
 
-class BorrowingScreen extends StatelessWidget {
+class BorrowingScreen extends StatefulWidget {
   const BorrowingScreen({super.key});
+
+  @override
+  State<BorrowingScreen> createState() => _BorrowingScreenState();
+}
+
+class _BorrowingScreenState extends State<BorrowingScreen> {
+  @override
+  void initState() {
+    super.initState();
+    fetchBorrowedBooks();
+  }
+
+  Future<void> fetchBorrowedBooks() async {
+    await Provider.of<BooksProvider>(context, listen: false)
+        .fetchBorrowedBooks();
+  }
 
   @override
   Widget build(BuildContext context) {

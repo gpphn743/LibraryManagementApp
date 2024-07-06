@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:library_management_app/modules/route/app_router.dart';
 
 import 'package:library_management_app/modules/service/books_provider.dart';
+import 'package:library_management_app/modules/service/firestore_service.dart';
 import 'package:library_management_app/modules/service/google_books_service.dart';
 import 'package:library_management_app/modules/widgets/auth_wrapper.dart';
 
@@ -33,8 +34,11 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
-          create: (context) => BooksProvider(apiService: ApiService()),
-        ),
+            create: (context) => BooksProvider(apiService: ApiService()),
+          ),
+          Provider(
+            create: (_) => FirestoreService(),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false, //hide debug tag

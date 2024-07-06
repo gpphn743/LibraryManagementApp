@@ -73,24 +73,26 @@ class BookDetailScreen extends StatelessWidget {
                         Icons.favorite_border,
                         color: Colors.amber,
                       ),
+                      tooltip: 'Add to Bucket List',
                     ),
                     IconButton(
-                        onPressed: () async {
-                          // booksProvider.addToBorrowedBooks(book);
-                          // Navigator.pop(context);
-                          await Provider.of<BooksProvider>(context,
-                                  listen: false)
-                              .addToBorrowedBooks(book);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content:
-                                    Text('${book.title} added to Borrowing')),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.add_circle_outline,
-                          color: Colors.amber,
-                        ))
+                      onPressed: () async {
+                        // booksProvider.addToBorrowedBooks(book);
+                        // Navigator.pop(context);
+                        await Provider.of<BooksProvider>(context, listen: false)
+                            .addToBorrowedBooks(book);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content:
+                                  Text('${book.title} added to Borrowing')),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.add_circle_outline,
+                        color: Colors.amber,
+                      ),
+                      tooltip: 'Borrow now!',
+                    )
                   ],
                 ),
                 Spacing.v10,

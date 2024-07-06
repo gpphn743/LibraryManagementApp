@@ -38,13 +38,13 @@ class BooksProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      trendingBooks = (await apiService.fetchBooks('lord of the rings'))
+      trendingBooks = (await apiService.fetchBooks('wall street'))
           .map((json) => Book.fromJson(json))
           .toList();
-      bucketListBooks = (await apiService.fetchBooks('little women'))
+      bucketListBooks = (await apiService.fetchBooks('lord of the rings'))
           .map((json) => Book.fromJson(json))
           .toList();
-      onBorrowingBooks = (await apiService.fetchBooks('wall street'))
+      onBorrowingBooks = (await apiService.fetchBooks('harry potter'))
           .map((json) => Book.fromJson(json))
           .toList();
     } catch (e) {
@@ -56,13 +56,23 @@ class BooksProvider extends ChangeNotifier {
   }
 
   Future<void> addToBorrowedBooks(Book book) async {
-    await firestoreService.addBorrowedBook(book);
-    borrowedBooks.add(book);
-    notifyListeners();
+    if (!borrowedBooks.any((b) => b.id == book.id)) {
+      await firestoreService.addBorrowedBook(book);
+      borrowedBooks.add(book);
+      notifyListeners();
+    } else {
+      debugPrint('Book is already borrowed!');
+    }
   }
 
   Future<void> fetchBorrowedBooks() async {
     borrowedBooks = await firestoreService.getBorrowedBooks();
+    notifyListeners();
+  }
+
+  Future<void> deleteBorrowedBooks(String bookId) async {
+    await firestoreService.deleteBorrowedBook(bookId);
+    borrowedBooks.removeWhere((book) => book.id == bookId);
     notifyListeners();
   }
 }

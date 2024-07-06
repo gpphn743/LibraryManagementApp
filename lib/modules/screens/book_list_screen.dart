@@ -76,6 +76,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:library_management_app/modules/screens/book_detail_screen.dart';
+import 'package:library_management_app/modules/themes/app_color.dart';
 import 'package:provider/provider.dart';
 import 'package:library_management_app/modules/service/books_provider.dart';
 
@@ -112,20 +113,36 @@ class BookListScreen extends StatelessWidget {
                       itemCount: booksProvider.books.length,
                       itemBuilder: (context, index) {
                         final book = booksProvider.books[index];
-                        return ListTile(
-                          leading: book.thumbnail.isNotEmpty
-                              ? Image.network(book.thumbnail)
-                              : null,
-                          title: Text(book.title),
-                          subtitle: Text(book.authors),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      BookDetailScreen(book: book)),
-                            );
-                          },
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.amber),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: ListTile(
+                              leading: book.thumbnail.isNotEmpty
+                                  ? Image.network(book.thumbnail)
+                                  : ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: const Image(
+                                        image:
+                                            AssetImage("assets/images/huh.jpg"),
+                                      ),
+                                    ),
+                              title: Text(book.title),
+                              subtitle: Text(book.authors),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          BookDetailScreen(book: book)),
+                                );
+                              },
+                            ),
+                          ),
                         );
                       },
                     ),

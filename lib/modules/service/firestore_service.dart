@@ -32,4 +32,35 @@ class FirestoreService {
     }
     return [];
   }
+
+  Future<void> deleteBorrowedBook(String bookId) async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      await _firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('borrowedBooks')
+          .doc(bookId)
+          .delete();
+    }
+  }
+
+  Future<void> setUserInfo(String username) async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      await _firestore.collection('users').doc(user.uid).set({
+        'username': username,
+      }, SetOptions(merge: true));
+    }
+  }
+
+  Future<String?> getUserInfo() async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      DocumentSnapshot userDoc =
+          await _firestore.collection('users').doc(user.uid).get();
+      return userDoc['username'] as String?;
+    }
+    return null;
+  }
 }

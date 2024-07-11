@@ -6,7 +6,6 @@ import 'package:library_management_app/modules/route/app_router.dart';
 import 'package:library_management_app/modules/service/books_provider.dart';
 import 'package:library_management_app/modules/service/firestore_service.dart';
 import 'package:library_management_app/modules/service/google_books_service.dart';
-import 'package:library_management_app/modules/widgets/auth_wrapper.dart';
 
 import 'package:library_management_app/modules/themes/app_color.dart';
 import 'package:firebase_core/firebase_core.dart';

@@ -6,6 +6,7 @@ import 'package:library_management_app/modules/themes/spacing.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
+  
   const HomeScreen({super.key});
 
   @override
@@ -32,13 +33,26 @@ class HomeScreen extends StatelessWidget {
       child: ListView(
         scrollDirection: Axis.vertical,
         children: <Widget>[
-          const Text(
-            "Welcome, Eddie Wood!",
-            style: TextStyle(
-                color: AppColors.mainColor,
-                fontSize: 24,
-                fontWeight: FontWeight.bold),
+          const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Welcome,",
+                style: TextStyle(
+                    color: AppColors.mainColor,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold),
+              ),
+              Text(
+                "Eddie Wood.",
+                style: TextStyle(
+                    color: Colors.amber,
+                    fontSize: 34,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
+          
           _buildSection(
             context,
             'Trending',
@@ -47,15 +61,15 @@ class HomeScreen extends StatelessWidget {
           ),
           _buildSection(
             context,
-            'Bucket List',
-            Icons.card_giftcard,
-            booksProvider.bucketListBooks,
+            'On Borrowing',
+            Icons.menu_book,
+            booksProvider.borrowedBooks,
           ),
           _buildSection(
             context,
-            'On Borrowing',
-            Icons.menu_book,
-            booksProvider.onBorrowingBooks,
+            'Bucket List',
+            Icons.card_giftcard,
+            booksProvider.bucketListBooks,
           ),
         ],
       ),
@@ -76,7 +90,7 @@ class HomeScreen extends StatelessWidget {
                   title,
                   style: const TextStyle(
                       color: AppColors.mainColor,
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold),
                 ),
                 Icon(

@@ -69,24 +69,8 @@ class _AccountScreenState extends State<AccountScreen> {
                     width: 2.0, //độ dày của border
                   ),
                   image: const DecorationImage(
-                    image: AssetImage("assets/images/unnamed.png"),
+                    image: AssetImage("assets/images/shoes.jpg"),
                     fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              Spacing.v10,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(24)),
-                    ),
-                    labelText: 'Email Address',
-                    suffixIcon: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.edit_rounded),
-                    ),
                   ),
                 ),
               ),
@@ -100,6 +84,22 @@ class _AccountScreenState extends State<AccountScreen> {
                       borderRadius: BorderRadius.all(Radius.circular(24)),
                     ),
                     labelText: 'Username',
+                    suffixIcon: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.edit_rounded),
+                    ),
+                  ),
+                ),
+              ),
+              Spacing.v10,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: TextField(
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(24)),
+                    ),
+                    labelText: 'Email Address',
                     suffixIcon: IconButton(
                       onPressed: () {},
                       icon: const Icon(Icons.edit_rounded),

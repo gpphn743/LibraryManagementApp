@@ -6,10 +6,31 @@ import 'package:library_management_app/modules/themes/app_color.dart';
 import 'package:library_management_app/modules/themes/spacing.dart';
 import 'package:provider/provider.dart';
 
-class BookDetailScreen extends StatelessWidget {
+class BookDetailScreen extends StatefulWidget {
   final Book book;
 
   const BookDetailScreen({super.key, required this.book});
+
+  @override
+  State<BookDetailScreen> createState() => _BookDetailScreenState();
+}
+
+class _BookDetailScreenState extends State<BookDetailScreen> {
+  DateTime? _selectedReturnDate;
+
+  Future<void> _selectReturnDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now().add(const Duration(days: 7)), //default
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    );
+    if (picked != null && picked != _selectedReturnDate) {
+      setState(() {
+        _selectedReturnDate = picked;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +51,9 @@ class BookDetailScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                book.thumbnail.isNotEmpty
+                widget.book.thumbnail.isNotEmpty
                     ? Center(
-                        child: Image.network(book.thumbnail),
+                        child: Image.network(widget.book.thumbnail),
                       )
                     : const Center(
                         child:
@@ -59,7 +80,7 @@ class BookDetailScreen extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        book.title,
+                        widget.book.title,
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -77,14 +98,23 @@ class BookDetailScreen extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () async {
+                        if (_selectedReturnDate == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Please select a return date'),
+                            ),
+                          );
+                          return;
+                        }
                         // booksProvider.addToBorrowedBooks(book);
                         // Navigator.pop(context);
                         await Provider.of<BooksProvider>(context, listen: false)
-                            .addToBorrowedBooks(book);
+                            .addToBorrowedBooks(
+                                widget.book, _selectedReturnDate!);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                              content:
-                                  Text('${book.title} added to Borrowing')),
+                              content: Text(
+                                  '${widget.book.title} added to Borrowing')),
                         );
                       },
                       icon: const Icon(
@@ -98,29 +128,45 @@ class BookDetailScreen extends StatelessWidget {
                 Spacing.v10,
                 Center(
                   child: Text(
-                    book.authors,
+                    widget.book.authors,
                     style: const TextStyle(
                       fontSize: 18,
                       fontStyle: FontStyle.italic,
                     ),
                   ),
                 ),
+                Row(
+                  //read again this one
+                  children: [
+                    const Text(
+                      'Return Date: ',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    Text(
+                      _selectedReturnDate == null
+                          ? 'Select a date'
+                          : _selectedReturnDate!
+                              .toLocal()
+                              .toString()
+                              .split(' ')[0],
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    IconButton(
+                      icon:
+                          const Icon(Icons.calendar_today, color: Colors.amber),
+                      onPressed: () => _selectReturnDate(context),
+                    ),
+                  ],
+                ),
                 Spacing.v10,
                 Text(
-                  book.description,
+                  widget.book.description,
                   style: const TextStyle(
                     fontSize: 16,
                   ),
                   textAlign: TextAlign.justify,
                 ),
-                // ElevatedButton.icon(
-                //   onPressed: () {
-                //     booksProvider.addToBorrowedBooks(book);
-                //     Navigator.pop(context);
-                //   },
-                //   icon: const Icon(Icons.add_circle_outline),
-                //   label: const Text('Add to Borrowing List'),
-                // ),
               ],
             ),
           ),

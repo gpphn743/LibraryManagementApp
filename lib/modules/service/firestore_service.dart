@@ -63,4 +63,43 @@ class FirestoreService {
     }
     return null;
   }
+
+  Future<void> addFavoriteBook(Book book) async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      await _firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('favoriteBooks')
+          .doc(book.id)
+          .set(book.toMap());
+    }
+  }
+
+  Future<void> removeFavoriteBook(String bookId) async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      await _firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('favoriteBooks')
+          .doc(bookId)
+          .delete();
+    }
+  }
+
+  Future<List<Book>> getFavoriteBooks() async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('favoriteBooks')
+          .get();
+      return querySnapshot.docs
+          .map((doc) => Book.fromMap(doc.data() as Map<String, dynamic>))
+          .toList();
+    }
+    return [];
+  }
 }

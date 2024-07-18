@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:library_management_app/modules/screens/bucketlist_screen.dart';
 import 'package:library_management_app/modules/service/books_provider.dart';
 import 'package:library_management_app/modules/models/book.dart';
 import 'package:library_management_app/modules/themes/app_color.dart';
@@ -100,7 +101,16 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                if (title == 'Bucket List') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const BucketlistScreen(),
+                    ),
+                  );
+                }
+              },
               icon: const Icon(
                 Icons.double_arrow_rounded,
                 color: AppColors.mainColor,

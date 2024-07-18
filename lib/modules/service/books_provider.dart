@@ -11,11 +11,13 @@ class BooksProvider extends ChangeNotifier {
   List<Book> bucketListBooks = [];
   // List<Book> onBorrowingBooks = []; //already have borrowedBooks
   List<Book> borrowedBooks = [];
+  
   bool isLoading = false;
 
   BooksProvider({required this.apiService}) {
     fetchDisplayBooks();
     fetchBorrowedBooks();
+    fetchFavoriteBooks();
   }
 
   Future<void> fetchBooks(String query) async {
@@ -38,12 +40,12 @@ class BooksProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      trendingBooks = (await apiService.fetchBooks('wall street'))
+      trendingBooks = (await apiService.fetchBooks('harry potter'))
           .map((json) => Book.fromJson(json))
           .toList();
-      bucketListBooks = (await apiService.fetchBooks('flow'))
-          .map((json) => Book.fromJson(json))
-          .toList();
+      // bucketListBooks = (await apiService.fetchBooks('flow'))
+      //     .map((json) => Book.fromJson(json))
+      //     .toList();
       // onBorrowingBooks = (await apiService.fetchBooks('flow'))
       //     .map((json) => Book.fromJson(json))
       //     .toList();
@@ -78,4 +80,22 @@ class BooksProvider extends ChangeNotifier {
     borrowedBooks.removeWhere((book) => book.id == bookId);
     notifyListeners();
   }
+
+  Future<void> fetchFavoriteBooks() async {
+    bucketListBooks = await firestoreService.getFavoriteBooks();
+    notifyListeners();
+  }
+
+  Future<void> toggleFavoriteStatus(Book book) async {
+    book.isFavorite = !book.isFavorite;
+    if (book.isFavorite) {
+      await firestoreService.addFavoriteBook(book);
+      bucketListBooks.add(book);
+    } else {
+      await firestoreService.removeFavoriteBook(book.id);
+      bucketListBooks.remove(book);
+    }
+    notifyListeners();
+  }
+  
 }

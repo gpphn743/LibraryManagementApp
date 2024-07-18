@@ -6,6 +6,7 @@ class Book {
   final String thumbnail;
   DateTime? borrowDate;
   DateTime? returnDate;
+  bool isFavorite;
 
   Book({
     required this.id,
@@ -15,6 +16,7 @@ class Book {
     required this.thumbnail,
     this.borrowDate,
     this.returnDate,
+    this.isFavorite = false,
   });
 
   factory Book.fromJson(Map<String, dynamic> json) {

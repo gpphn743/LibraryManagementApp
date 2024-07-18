@@ -34,7 +34,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //final booksProvider = Provider.of<BooksProvider>(context);
+    final booksProvider = Provider.of<BooksProvider>(context, listen: false);
 
     // IconData icon;
     // if (condition) {
@@ -89,9 +89,14 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.favorite_border,
+                      onPressed: () {
+                        // setState(() {
+                        //   booksProvider.toggleFavoriteStatus(widget.book);
+                        // });
+                        booksProvider.toggleFavoriteStatus(widget.book);
+                      },
+                      icon:  Icon(
+                        widget.book.isFavorite ? Icons.favorite : Icons.favorite_border,
                         color: Colors.amber,
                       ),
                       tooltip: 'Add to Bucket List',

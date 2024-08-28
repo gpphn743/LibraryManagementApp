@@ -43,23 +43,23 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Spacing.v40,
           const Text(
             'Login',
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 36,
+              fontSize: 32,
               color: AppColors.mainColor,
             ),
           ),
           Spacing.v20,
-          Spacing.v10,
           const Image(
             image: ResizeImage(
               AssetImage(
                 'assets/images/login.png',
               ),
-              height: 150,
-              width: 200,
+              height: 130,
+              width: 180,
             ),
           ),
           Spacing.v40,
@@ -91,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           Spacing.v10,
           Container(
-            margin: const EdgeInsets.fromLTRB(40, 80, 40, 100),
+            margin: const EdgeInsets.fromLTRB(40, 40, 40, 120),
             height: 58,
             child: ElevatedButton(
               onPressed: () {
@@ -135,6 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
               _pushtoSignUpScreen(context);
             },
           ),
+          Spacing.v20,
         ],
       ),
     );

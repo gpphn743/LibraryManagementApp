@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:library_management_app/modules/models/book.dart';
 import 'package:library_management_app/modules/service/books_provider.dart';
 import 'package:library_management_app/modules/themes/app_color.dart';
@@ -35,26 +36,41 @@ class _BorrowingScreenState extends State<BorrowingScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Center(
+                child: Container(
+                  height: 5,
+                  width: 80,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+              ),
+              Spacing.v10,
               Text(
                 book.title,
-                style:
-                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
               ),
               Spacing.v10,
               Text(
                 book.authors,
-                style:
-                    const TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
+                style: const TextStyle(
+                    fontSize: 18,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.black),
               ),
               Spacing.v10,
               Text(
                 'Borrow Date: ${book.borrowDate != null ? book.borrowDate!.toLocal().toString().split(' ')[0] : 'N/A'}',
-                style: const TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16, color: Colors.black),
               ),
               Spacing.v10,
               Text(
                 'Return Date: ${book.returnDate != null ? book.returnDate!.toLocal().toString().split(' ')[0] : 'N/A'}',
-                style: const TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16, color: Colors.black),
               ),
             ],
           ),
@@ -68,62 +84,77 @@ class _BorrowingScreenState extends State<BorrowingScreen> {
     final booksProvider = Provider.of<BooksProvider>(context);
 
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: booksProvider.borrowedBooks.isEmpty
-            ? const Center(
-                child: Text('No Borrowed Books Yet!'),
-              )
-            : ListView.builder(
-                itemCount: booksProvider.borrowedBooks.length,
-                itemBuilder: (context, index) {
-                  final book = booksProvider.borrowedBooks[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        _showBookDetailsBottomSheet(context, book);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.mainColor),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: ListTile(
-                          leading: book.thumbnail.isNotEmpty
-                              ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image.network(book.thumbnail),
-                                )
-                              : ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: const Image(
-                                    image: AssetImage("assets/images/huh.jpg"),
+      backgroundColor: AppColors.contentColor,
+      body: SafeArea(
+        child: Column(
+          children: [
+            booksProvider.borrowedBooks.isEmpty
+                ? const Center(
+                    child: Text('No Borrowed Books Yet!'),
+                  )
+                : Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
+                      child: ListView.builder(
+                        itemCount: booksProvider.borrowedBooks.length,
+                        itemBuilder: (context, index) {
+                          final book = booksProvider.borrowedBooks[index];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                _showBookDetailsBottomSheet(context, book);
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  // border: Border.all(color: AppColors.mainColor),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: ListTile(
+                                  leading: book.thumbnail.isNotEmpty
+                                      ? ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          child: Image.network(book.thumbnail),
+                                        )
+                                      : ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          child: const Image(
+                                            image: AssetImage(
+                                                "assets/images/huh.jpg"),
+                                          ),
+                                        ),
+                                  title: Text(book.title),
+                                  subtitle: Text(book.authors),
+                                  trailing: IconButton(
+                                    onPressed: () async {
+                                      await booksProvider
+                                          .deleteBorrowedBooks(book.id);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              '${book.title} removed from Borrowing'),
+                                        ),
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      Icons.remove_circle_outline,
+                                      color: Colors.amber,
+                                    ),
                                   ),
                                 ),
-                          title: Text(book.title),
-                          subtitle: Text(book.authors),
-                          trailing: IconButton(
-                            onPressed: () async {
-                              await booksProvider.deleteBorrowedBooks(book.id);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                      '${book.title} removed from Borrowing'),
-                                ),
-                              );
-                            },
-                            icon: const Icon(
-                              Icons.remove_circle_outline,
-                              color: Colors.amber,
+                              ),
                             ),
-                          ),
-                        ),
+                          );
+                        },
                       ),
                     ),
-                  );
-                },
-              ),
+                  ),
+          ],
+        ),
       ),
     );
   }

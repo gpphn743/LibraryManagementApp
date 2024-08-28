@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:library_management_app/modules/screens/book_detail_screen.dart';
 import 'package:library_management_app/modules/service/books_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -36,6 +37,14 @@ class BucketlistScreen extends StatelessWidget {
                             ),
                       title: Text(book.title),
                       subtitle: Text(book.authors),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  BookDetailScreen(book: book)),
+                        );
+                      },
                     ),
                   );
                 },

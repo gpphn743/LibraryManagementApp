@@ -5,6 +5,7 @@ import 'package:library_management_app/modules/screens/book_list_screen.dart';
 import 'package:library_management_app/modules/screens/borrowing_screen.dart';
 import 'package:library_management_app/modules/screens/home_screen.dart';
 import 'package:library_management_app/modules/screens/login_screen.dart';
+import 'package:library_management_app/modules/screens/starter_screen.dart';
 import 'package:library_management_app/modules/widgets/control.dart';
 import 'package:library_management_app/modules/screens/page_not_found.dart';
 import 'package:library_management_app/modules/screens/sign_up_screen.dart';
@@ -15,6 +16,10 @@ class AppRouter {
 
   Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case RouteName.starter:
+        return MaterialPageRoute(
+            builder: (context) => const StarterScreen(),
+            settings: const RouteSettings(name: RouteName.starter));
       case RouteName.login:
         return MaterialPageRoute(
             builder: (context) => const LoginScreen(),

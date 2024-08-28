@@ -63,6 +63,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
           ),
+          // const Icon(
+          //   Icons.verified_outlined,
+          //   color: Colors.amber,
+          //   size: 100,
+          // ),
           Spacing.v10,
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),

@@ -4,6 +4,7 @@ import 'package:library_management_app/modules/screens/account_screen.dart';
 import 'package:library_management_app/modules/screens/book_list_screen.dart';
 import 'package:library_management_app/modules/screens/borrowing_screen.dart';
 import 'package:library_management_app/modules/screens/home_screen.dart';
+import 'package:library_management_app/modules/themes/app_color.dart';
 
 class Control extends StatefulWidget {
   const Control({super.key});
@@ -37,33 +38,47 @@ class _ControlState extends State<Control> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
-        appBar: AppBar(
-          actions: <Widget>[
-            IconButton(
-              onPressed: _signOut,
-              icon: const Icon(Icons.logout),
-              tooltip: 'Sign Out',
-            )
-          ],
-        ),
+        // appBar: AppBar(
+        //   leading: GestureDetector(
+        //     child: Container(
+        //       margin: const EdgeInsets.all(5),
+        //       decoration: const BoxDecoration(
+        //           color: AppColors.mainColor,
+        //           borderRadius: BorderRadius.all(Radius.circular(15))),
+        //       child: const Icon(
+        //         Icons.arrow_back_rounded,
+        //         color: Colors.white,
+        //       ),
+        //     ),
+        //   ),
+        //   actions: <Widget>[
+        //     IconButton(
+        //       onPressed: _signOut,
+        //       icon: const Icon(Icons.logout),
+        //       tooltip: 'Sign Out',
+        //     )
+        //   ],
+        // ),
         body: _screens[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
+          useLegacyColorScheme: false,
+          unselectedItemColor: Colors.grey.shade400,
+          type: BottomNavigationBarType.shifting,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.home_outlined),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.explore),
-              label: 'Book List',
+              icon: Icon(Icons.explore_outlined),
+              label: 'Explore',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.menu_book),
-              label: 'Borrowing',
+              icon: Icon(Icons.menu_book_rounded),
+              label: 'Reading',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.account_box),
+              icon: Icon(Icons.account_circle_outlined),
               label: 'Account',
             ),
           ],

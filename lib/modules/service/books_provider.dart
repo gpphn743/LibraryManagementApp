@@ -11,7 +11,7 @@ class BooksProvider extends ChangeNotifier {
   List<Book> bucketListBooks = [];
   // List<Book> onBorrowingBooks = []; //already have borrowedBooks
   List<Book> borrowedBooks = [];
-  
+
   bool isLoading = false;
 
   BooksProvider({required this.apiService}) {
@@ -40,7 +40,7 @@ class BooksProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      trendingBooks = (await apiService.fetchBooks('harry potter'))
+      trendingBooks = (await apiService.fetchBooks('minimalism'))
           .map((json) => Book.fromJson(json))
           .toList();
       // bucketListBooks = (await apiService.fetchBooks('flow'))
@@ -82,8 +82,17 @@ class BooksProvider extends ChangeNotifier {
   }
 
   Future<void> fetchFavoriteBooks() async {
-    bucketListBooks = await firestoreService.getFavoriteBooks();
+    //unfixed
+    isLoading = true;
     notifyListeners();
+    try {
+      bucketListBooks = await firestoreService.getFavoriteBooks();
+    } catch (e) {
+      debugPrint('Error: $e');
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
   }
 
   Future<void> toggleFavoriteStatus(Book book) async {
@@ -97,5 +106,4 @@ class BooksProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
-  
 }

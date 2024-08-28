@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:library_management_app/modules/route/app_router.dart';
+import 'package:library_management_app/modules/screens/starter_screen.dart';
 
 import 'package:library_management_app/modules/service/books_provider.dart';
 import 'package:library_management_app/modules/service/firestore_service.dart';
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
               displayColor: AppColors.mainColor,
             ),
           ),
-          //home: const AuthWrapper(),
+          //home: const StarterScreen(),
           onGenerateRoute: AppRouter.instance.onGenerateRoute,
         ));
   }

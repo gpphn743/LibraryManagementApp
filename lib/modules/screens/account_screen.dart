@@ -46,8 +46,8 @@ class _AccountScreenState extends State<AccountScreen> {
       return const Center(child: CircularProgressIndicator());
     }
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Center(
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Column(
             children: [
               const Text(
